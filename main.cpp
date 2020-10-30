@@ -9,10 +9,12 @@ int main()
 		int choice = 0;
 		int quantum = 0;
 		bool bAll = false;
+		float totalBt = 0;
 		float totalWt = 0;
 		float totalTat = 0;
 		float avgWt = 0;
 		float avgTat = 0;
+		float cpuUtil = 0;
 		vector<int> at, bt, pr, ct, wt, tat;
 		vector<GanttData> gantt;
 		
@@ -135,12 +137,14 @@ int main()
 			{
 				tat[i] = ct[i] - at[i];
 				wt[i] = tat[i] - bt[i];
+				totalBt += bt[i];
 				totalWt += wt[i];
 				totalTat += tat[i];
 			}
 			
 			avgWt = totalWt / nProc;
 			avgTat = totalTat / nProc;
+			cpuUtil = totalBt / gantt.back().ct * 100.0f;
 			
 			// Output CPU schedule
 			if (choice == 5 || choice == 6)
@@ -193,7 +197,8 @@ int main()
 			cout << "\nTotal WT: " << totalWt << " ms";
 			cout << "\nTotal TAT: " << totalTat << " ms\n";
 			cout << "\nAverage WT: " << avgWt << " ms";
-			cout << "\nAverage TAT: " << avgTat << " ms\n\n";
+			cout << "\nAverage TAT: " << avgTat << " ms\n";
+			cout << "\nCPU Util: " << cpuUtil << "%\n\n";
 			
 			gantt.clear();
 			totalWt = 0;
